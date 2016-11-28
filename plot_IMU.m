@@ -3,15 +3,15 @@ clear all
 close all
 %% Import data from text file.
 %% Initialize variables.
-filename = 'C:\Users\SONTRAN\Desktop\Internship\Data-Log\log23112016\Log 2016-11-23 12_31_34.txt';
+filename = 'C:\Users\SONTRAN\Desktop\Internship\Data-Log\log28112016\Log 2016-11-28 16_58_05.txt';
 delimiter = {'\t',' ',':','-'};
-startRow = 400;
-endRow = 1500;
+startRow = 200;
+endRow = 1110;
 
 %% Format string for each line of text:
 
 % For more information, see the TEXTSCAN documentation.
-formatSpec = '%s%f%f%f%*s%*s%*s%*s%*s%*s%*s%*s%*s%*s%*s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%*s%[^\n\r]';
+formatSpec = '%s%f%f%f%*s%*s%*s%*s%*s%*s%*s%*s%*s%*s%*s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%*s%[^\n\r]';
 
 %% Open the text file.
 fileID = fopen(filename,'r');
@@ -25,7 +25,7 @@ fclose(fileID);
 %% Post processing for unimportable data.
 
 %% Create output variable
-Log = table(dataArray{1:end-1}, 'VariableNames', {'nRF','Connect','VarName3','VarName4','VarName16','VarName17','VarName18','VarName19','VarName20','VarName21','VarName22','VarName23','VarName24','VarName25','VarName26','VarName27','VarName28','VarName29','VarName30','VarName31','VarName32','VarName33'});
+Log = table(dataArray{1:end-1}, 'VariableNames', {'nRF','Connect','VarName3','VarName4','VarName16','VarName17','VarName18','VarName19','VarName20','VarName21','VarName22','VarName23','VarName24','VarName25','VarName26','VarName27','VarName28','VarName29','VarName30','VarName31','VarName32','VarName33','VarName34','VarName35'});
 
 %% Clear temporary variables
 clearvars filename delimiter formatSpec fileID dataArray ans;
@@ -102,6 +102,15 @@ magZ = 1.0 * magZ;
 % calculate time in second
 time = log_id.VarName3*60 + log_id.VarName4;
 
+% counter value from sensor for checking package loss
+counter1 = log_id.VarName34;
+counter2 = log_id.VarName35;
+counter = strcat(counter1,counter2);
+counter = typecast(uint16(base2dec(counter, 16)), 'int16');
+
+% incemental index value to compare with counter
+index = [counter(1):1:((endRow - startRow)/2 + counter(1) - 1)]';
+
 %% Plot results
 % Gyro
 figure(1)
@@ -144,3 +153,11 @@ plot(time,magZ,'g');
 title('Mag Z');
 grid on
 
+%% Check how many package losses
+error = 0;
+for i = 1:((endRow - startRow)/2)
+    if index(i) ~= counter(i)
+        error = error + 1;
+        disp(i+counter(1));
+    end
+end
