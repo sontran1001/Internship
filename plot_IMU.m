@@ -11,7 +11,7 @@ endRow = 1500;
 %% Format string for each line of text:
 
 % For more information, see the TEXTSCAN documentation.
-formatSpec = '%s%f%f%f%*s%*s%*s%*s%*s%*s%*s%*s%*s%*s%*s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%*s%[^\n\r]';
+formatSpec = '%s%f%f%f%*s%*s%*s%*s%*s%*s%*s%*s%*s%*s%*s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%*s%[^\n\r]';
 
 %% Open the text file.
 fileID = fopen(filename,'r');
