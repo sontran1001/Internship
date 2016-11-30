@@ -3,10 +3,10 @@ clear all
 close all
 %% Import data from text file.
 %% Initialize variables.
-filename = 'C:\Users\SONTRAN\Desktop\Internship\Data-Log\log28112016\Log 2016-11-28 16_58_05.txt';
+filename = 'C:\Users\SONTRAN\Desktop\Internship\Data-Log\log29112016\Log 2016-11-29 18_20_54.txt';
 delimiter = {'\t',' ',':','-'};
-startRow = 200;
-endRow = 1110;
+startRow = 300;
+endRow = 4000;
 
 %% Format string for each line of text:
 
@@ -105,7 +105,7 @@ time = log_id.VarName3*60 + log_id.VarName4;
 % counter value from sensor for checking package loss
 counter1 = log_id.VarName34;
 counter2 = log_id.VarName35;
-counter = strcat(counter1,counter2);
+counter = strcat(counter2,counter1);
 counter = typecast(uint16(base2dec(counter, 16)), 'int16');
 
 % incemental index value to compare with counter
@@ -155,9 +155,15 @@ grid on
 
 %% Check how many package losses
 error = 0;
-for i = 1:((endRow - startRow)/2)
-    if index(i) ~= counter(i)
+package_loss = 0;
+sum_interval = 0;
+for i = 1:((endRow - startRow)/2 - 1)
+    if (counter(i) + 1) ~= counter(i + 1)
         error = error + 1;
-        disp(i+counter(1));
+        package_loss = package_loss + (counter(i + 1) - counter(i) - 1);
+        disp(counter(i));
     end
+    sum_interval = sum_interval + time(i+1) - time(i);
 end
+package_loss
+interval = 1000 * sum_interval/((endRow - startRow)/2 - 1) % milisecond
