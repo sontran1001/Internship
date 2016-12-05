@@ -80,7 +80,7 @@
 #define SENSOR_PERI                     2  
 
 // Data readout periods (range 100 - 2550 ms)
-#define SENSOR_MIN_UPDATE_PERIOD        10     // Minimum 100 milliseconds		// @Son - we can change here to have a lower period
+#define SENSOR_MIN_UPDATE_PERIOD        100     // Minimum 100 milliseconds		// @Son - this can be redefined for each sensor
 #define SENSOR_PERIOD_RESOLUTION        10      // Resolution 10 milliseconds
 
 // Common values for turning a sensor on and off + config/status
