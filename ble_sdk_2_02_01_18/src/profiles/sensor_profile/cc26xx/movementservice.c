@@ -580,6 +580,10 @@ static bStatus_t sensor_WriteAttrCB(uint16_t connHandle, gattAttribute_t *pAttr,
         status = ATT_ERR_ATTR_NOT_LONG;
       }
 
+      if((pValue[0] & 0x80) == 0x80)    // to make sure that user cannot enable WOM
+      {
+          status = ATT_ERR_INVALID_VALUE;
+      }
       // Write the value
       if (status == SUCCESS)
       {
