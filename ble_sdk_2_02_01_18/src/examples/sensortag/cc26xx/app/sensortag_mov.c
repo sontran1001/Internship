@@ -319,7 +319,7 @@ void SensorTagMov_processSensorEvent(void)
           appState = APP_STATE_IDLE;
           //if (SensorMpu9250_reset())	// @Son: why we need to reset -> sleep
           //{
-            SensorMpu9250_enableWom(movThreshold);
+          //SensorMpu9250_enableWom(movThreshold);
           //}
         }
       }
