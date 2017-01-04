@@ -92,6 +92,11 @@ extern void SensorTagMov_processCharChangeEvt(uint8_t paramID);
  */
 extern void SensorTagMov_reset(void);
 
+/*
+ * Set operation mode for IMU sensor    @Son
+ */
+extern bool SetMode_SensorMpu9250(uint8_t period);
+
 #else
 
 /* Movement module not included */

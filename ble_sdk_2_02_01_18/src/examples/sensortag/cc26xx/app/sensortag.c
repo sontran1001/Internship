@@ -127,7 +127,7 @@
 
 // Supervision timeout value (units of 10ms, 1000=10s) if automatic parameter
 // update request is enabled
-#define DEFAULT_DESIRED_CONN_TIMEOUT          100
+#define DEFAULT_DESIRED_CONN_TIMEOUT          10
 
 // Whether to enable automatic parameter update request when a
 // connection is formed

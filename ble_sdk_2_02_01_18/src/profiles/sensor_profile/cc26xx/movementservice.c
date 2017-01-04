@@ -580,10 +580,25 @@ static bStatus_t sensor_WriteAttrCB(uint16_t connHandle, gattAttribute_t *pAttr,
         status = ATT_ERR_ATTR_NOT_LONG;
       }
 
-      if((pValue[0] & 0x80) == 0x80)    // to make sure that user cannot enable WOM
+      if(sensorPeriod == 0x01)   // @Son: Mode 1 - WOM disabled, all axis are enabled
       {
-          status = ATT_ERR_INVALID_VALUE;
+          pValue[0] = 0x7F;
+          pValue[1] = pValue[1] & 0x03; // only take bit no. 8,9
+          //status = ATT_ERR_INVALID_VALUE;
       }
+      if(sensorPeriod == 0x02)  // @Son: Mode 2 - WOM disabled, ACC on, Gyro off, Mag can be changed
+      {
+          pValue[0] = 0x38 | (pValue[0] & 0x40);
+          pValue[1] = pValue[1] & 0x03; // only take bit no. 8,9
+          //status = ATT_ERR_INVALID_VALUE;
+      }
+      if(sensorPeriod == 0x03)   // @Son: Mode 3 - WOM disabled, only Mag on
+      {
+          pValue[0] = 0x40; // only magnetometer on
+          pValue[1] = 0x00;
+          //status = ATT_ERR_INVALID_VALUE;
+      }
+
       // Write the value
       if (status == SUCCESS)
       {

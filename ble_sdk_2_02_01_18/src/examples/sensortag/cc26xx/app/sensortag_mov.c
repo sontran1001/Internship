@@ -369,7 +369,7 @@ void SensorTagMov_processCharChangeEvt(uint8_t paramID)
         if (SensorMpu9250_powerIsOn())
         {
           DELAY_MS(5);
-          mpuConfig = newCfg | (SensorMpu9250_accReadRange() << 8);
+          mpuConfig = newCfg | (SensorMpu9250_accReadRange() << 8); // @Son
         }
       }
 
@@ -388,6 +388,7 @@ void SensorTagMov_processCharChangeEvt(uint8_t paramID)
   case SENSOR_PERI:
     Movement_getParameter(SENSOR_PERI, &newValue8);
     sensorPeriod = newValue8 * SENSOR_PERIOD_RESOLUTION;
+    SetMode_SensorMpu9250(newValue8); // @Son: set mode for Mpu9250 sensor
     Util_rescheduleClock(&periodicClock,sensorPeriod);
     break;
 
